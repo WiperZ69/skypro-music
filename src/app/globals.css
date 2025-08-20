@@ -5,7 +5,8 @@
 }
 
 body {
-	font-family: var(--font-montserrat);
+	font-family:
+		var(--font-montserrat), system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 h1,
@@ -21,7 +22,8 @@ p {
 a,
 input,
 button {
-	font-family: var(--font-montserrat);
+	font-family:
+		var(--font-montserrat), system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 a {
