@@ -102,6 +102,7 @@
 	-ms-flex-align: center;
 	align-items: center;
 	margin-bottom: 51px;
+	gap: 10px;
 }
 
 .centerblock__content {
@@ -119,12 +120,17 @@
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 24px;
-	margin-right: 15px;
+	margin-right: 5px;
 	color: #ffffff;
 }
 
+.filter__button_wrapper {
+	position: relative;
+}
+
 .filter__button {
-	/*composes: btn-text from '/src/UI/Button/button.module.css';*/
+	user-select: none;
+	position: relative;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -139,10 +145,6 @@
 		border: 1px solid #b672ff;
 		color: #b672ff;
 	}
-}
-
-.filter__button:not(:last-child) {
-	margin-right: 10px;
 }
 
 .content__title {
@@ -221,24 +223,17 @@
 
 .filter__list {
 	position: absolute;
-	top: 300px;
+	top: calc(100% + 10px);
+	left: 0;
 	background-color: #313131;
 	padding: 34px;
-	color: white;
 	border-radius: 12px;
-	display: flex;
-	gap: 28px;
 	height: max-content;
 	max-height: 237px;
 	min-width: 180px;
-	overflow-y: auto;
-	flex-direction: column;
 	width: max-content;
 	max-width: 248px;
 	z-index: 2;
-	box-sizing: border-box;
-	scrollbar-width: thin;
-	scrollbar-color: #ffffff #4b4949;
 
 	&::-webkit-scrollbar {
 		width: 4px;
@@ -259,4 +254,17 @@
 		background-color: #ffffff;
 		border-radius: 10px;
 	}
+}
+
+.filter__box {
+	color: white;
+	display: flex;
+	gap: 28px;
+	flex-direction: column;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: #ffffff #4b4949;
+	box-sizing: border-box;
+	max-height: 170px;
+	height: 100%;
 }

@@ -8,6 +8,55 @@ import styles from './CenterBlock.module.scss'
 
 type FilterType = 'author' | 'year' | 'genre' | null
 
+type FilterItem = string | { name: string; value: string }
+
+const FilterButton = ({
+	filterName,
+	label,
+	activeFilter,
+	setActiveFilter,
+	items,
+}: {
+	filterName: FilterType
+	label: string
+	activeFilter: FilterType
+	setActiveFilter: (filter: FilterType) => void
+	items: FilterItem[]
+}) => {
+	const isActive = activeFilter === filterName
+
+	return (
+		<div className={styles.filter__button_wrapper}>
+			<div
+				className={classNames(styles.filter__button, {
+					[styles.active]: isActive,
+				})}
+				onClick={() => setActiveFilter(isActive ? null : filterName)}
+			>
+				{label}
+			</div>
+			{isActive && (
+				<div className={styles.filter__list}>
+					<div className={styles.filter__box}>
+						{items.map((item, idx) => {
+							const displayText = typeof item === 'string' ? item : item.name
+
+							return (
+								<div
+									key={`${displayText}-${idx}`}
+									className={styles.filter__list_item}
+								>
+									{displayText}
+								</div>
+							)
+						})}
+					</div>
+				</div>
+			)}
+		</div>
+	)
+}
+
 export const CenterBlock = () => {
 	const [search, setSearch] = useState('')
 	const [debouncedSearch, setDebouncedSearch] = useState('')
@@ -34,33 +83,19 @@ export const CenterBlock = () => {
 		[],
 	)
 
-	const uniqueYears = useMemo(
-		() =>
-			Array.from(new Set(data.map(track => track.release_date.split('-')[0]))),
-		[],
-	)
-
 	const uniqueGenres = useMemo(
 		() => Array.from(new Set(data.flatMap(track => track.genre))),
 		[],
 	)
 
-	const currentFilterList = useMemo(() => {
-		switch (activeFilter) {
-			case 'author':
-				return uniqueAuthors
-			case 'year':
-				return uniqueYears
-			case 'genre':
-				return uniqueGenres
-			default:
-				return []
-		}
-	}, [activeFilter, uniqueAuthors, uniqueYears, uniqueGenres])
+	const dateOptions = [
+		{ name: 'Сначала новые', value: 'desc' },
+		{ name: 'Сначала старые', value: 'asc' },
+		{ name: 'По умолчанию', value: 'default' },
+	]
 
 	return (
 		<div className={styles.centerblock}>
-			{/* Поиск */}
 			<div className={styles.centerblock__search}>
 				<svg className={styles.search__svg}>
 					<use xlinkHref='/Image/icon/sprite.svg#icon-search'></use>
@@ -79,49 +114,29 @@ export const CenterBlock = () => {
 
 			<div className={styles.centerblock__filter}>
 				<div className={styles.filter__title}>Искать по:</div>
-
-				<div
-					className={classNames(styles.filter__button, {
-						[styles.active]: activeFilter === 'author',
-					})}
-					onClick={() =>
-						setActiveFilter(activeFilter === 'author' ? null : 'author')
-					}
-				>
-					исполнителю
-				</div>
-
-				<div
-					className={classNames(styles.filter__button, {
-						[styles.active]: activeFilter === 'year',
-					})}
-					onClick={() =>
-						setActiveFilter(activeFilter === 'year' ? null : 'year')
-					}
-				>
-					году выпуска
-				</div>
-
-				<div
-					className={classNames(styles.filter__button, {
-						[styles.active]: activeFilter === 'genre',
-					})}
-					onClick={() =>
-						setActiveFilter(activeFilter === 'genre' ? null : 'genre')
-					}
-				>
-					жанру
-				</div>
-				{activeFilter && (
-					<div className={styles.filter__list}>
-						{currentFilterList.map((item, idx) => (
-							<div key={`${item}-${idx}`}>{item}</div>
-						))}
-					</div>
-				)}
+				<FilterButton
+					filterName='author'
+					label='исполнителю'
+					activeFilter={activeFilter}
+					setActiveFilter={setActiveFilter}
+					items={uniqueAuthors}
+				/>
+				<FilterButton
+					filterName='year'
+					label='году выпуска'
+					activeFilter={activeFilter}
+					setActiveFilter={setActiveFilter}
+					items={dateOptions}
+				/>
+				<FilterButton
+					filterName='genre'
+					label='жанру'
+					activeFilter={activeFilter}
+					setActiveFilter={setActiveFilter}
+					items={uniqueGenres}
+				/>
 			</div>
 
-			{/* Контент */}
 			<div className={styles.centerblock__content}>
 				<div className={styles.content__title}>
 					<div className={classNames(styles.playlistTitle__col, styles.col01)}>
