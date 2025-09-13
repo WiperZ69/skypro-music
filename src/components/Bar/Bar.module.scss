@@ -97,6 +97,11 @@
 		height: 20px;
 		fill: #d9d9d9;
 	}
+	&__btnPauseSvg {
+		width: 22px;
+		height: 20px;
+		fill: #d9d9d9;
+	}
 	&__btnNext {
 		margin-right: 28px;
 		fill: #a53939;
@@ -139,6 +144,10 @@
 		-ms-flex-direction: row;
 		flex-direction: row;
 	}
+}
+
+.audio {
+	display: none;
 }
 
 .trackPlay {
