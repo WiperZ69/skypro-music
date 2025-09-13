@@ -1,6 +1,8 @@
 'use client'
 
 import { data } from '@/data/data'
+import { setTracks } from '@/store/features/trackSlice'
+import { useAppDispatch } from '@/store/store'
 import classNames from 'classnames'
 import { useEffect, useMemo, useState } from 'react'
 import { TrackItem } from '../TrackItem/TrackItem'
@@ -61,6 +63,13 @@ export const CenterBlock = () => {
 	const [search, setSearch] = useState('')
 	const [debouncedSearch, setDebouncedSearch] = useState('')
 	const [activeFilter, setActiveFilter] = useState<FilterType>(null)
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		if (data.length > 0) {
+			dispatch(setTracks(data))
+		}
+	}, [dispatch])
 
 	useEffect(() => {
 		const handler = setTimeout(() => {

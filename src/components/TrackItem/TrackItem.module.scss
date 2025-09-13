@@ -72,6 +72,30 @@
 	stroke: #4e4e4e;
 }
 
+.track__circle {
+	display: block;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background-color: #ad61ff;
+	animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.8);
+		opacity: 0.8;
+	}
+	50% {
+		transform: scale(1.5);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(0.8);
+		opacity: 0.8;
+	}
+}
+
 .track__titleLink {
 	cursor: pointer;
 	font-style: normal;
