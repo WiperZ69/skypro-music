@@ -29,8 +29,12 @@ export const TrackItem = ({ track }: Props) => {
 			<div className={styles.playlist__track}>
 				<div className={styles.track__title}>
 					<div className={styles.track__titleImage}>
-						{currentTrack?._id === track._id && isPlay ? (
-							<span className={styles.track__circle}></span>
+						{currentTrack?._id === track._id ? (
+							isPlay ? (
+								<span className={styles.track__circle}></span>
+							) : (
+								<span className={styles.track__circleStatic}></span>
+							)
 						) : (
 							<svg className={styles.track__titleSvg}>
 								<use xlinkHref='/Image/icon/sprite.svg#icon-note'></use>
