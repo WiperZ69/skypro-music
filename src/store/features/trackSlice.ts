@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type initialStateType = {
 	tracks: Track[]
+	allTracks: Track[]
 	shuffledTracks: Track[]
 	currentTrack: null | Track
 	currentIndex: number
@@ -14,6 +15,7 @@ type initialStateType = {
 
 const initialState: initialStateType = {
 	tracks: [],
+	allTracks: [],
 	shuffledTracks: [],
 	currentTrack: null,
 	currentIndex: -1,
@@ -30,6 +32,9 @@ const trackSlice = createSlice({
 		setTracks: (state, action: PayloadAction<Track[]>) => {
 			state.tracks = action.payload
 			state.shuffledTracks = [...state.tracks].sort(() => Math.random() * 0.5)
+		},
+		setAllTracks: (state, action: PayloadAction<Track[]>) => {
+			state.allTracks = action.payload
 		},
 		setCurrentTrack: (state, action: PayloadAction<Track>) => {
 			state.currentTrack = action.payload
@@ -98,6 +103,7 @@ const trackSlice = createSlice({
 
 export const {
 	setTracks,
+	setAllTracks,
 	setCurrentTrack,
 	setCurrentTrackByIndex,
 	setIsPlay,
