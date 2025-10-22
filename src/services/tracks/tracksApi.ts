@@ -1,10 +1,11 @@
 import axios from 'axios'
+import { Track } from '../../types/track'
 import { BASE_API_URL } from '../constants'
 
 export const getTracks = async (
 	selectionId?: string,
 	token?: string,
-): Promise<any> => {
+): Promise<Track[]> => {
 	try {
 		if (!selectionId) {
 			const res = await axios.get(`${BASE_API_URL}/catalog/track/all/`)
@@ -21,4 +22,24 @@ export const getTracks = async (
 	} catch (err) {
 		throw err
 	}
+}
+
+export const addLike = (access: string, id: number) => {
+	return axios.post(
+		BASE_API_URL + `/catalog/track/${id}/favorite/`,
+		{},
+		{
+			headers: {
+				Authorization: `Bearer ${access}`,
+			},
+		},
+	)
+}
+
+export const removeLike = (access: string, id: number) => {
+	return axios.delete(`${BASE_API_URL}/catalog/track/${id}/favorite/`, {
+		headers: {
+			Authorization: `Bearer ${access}`,
+		},
+	})
 }

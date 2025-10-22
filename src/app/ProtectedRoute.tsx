@@ -1,8 +1,8 @@
 'use client'
 
-import { useAppSelector } from '@/store/store'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState, type ReactNode } from 'react'
+import { useAppSelector } from '../store/store'
 
 interface ProtectedRouteProps {
 	children: ReactNode

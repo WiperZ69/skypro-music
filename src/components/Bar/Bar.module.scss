@@ -1,5 +1,5 @@
 .bar {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	left: 0;
 	width: 100%;
@@ -366,11 +366,20 @@
 	cursor: pointer;
 }
 
-.btnIcon:active .trackPlay__likeSvg,
-.btnIcon:active .trackPlay__dislikeSvg {
-	fill: #696969;
-	stroke: #ffffff;
+.trackPlay__like {
+	padding: 10px;
+}
+
+.trackPlay__likeSvg {
+	fill: transparent;
+	stroke: #696969;
 	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.trackPlay__likeSvg.liked {
+	fill: #b672ff;
+	stroke: #696969;
 }
 
 .btn-text {
