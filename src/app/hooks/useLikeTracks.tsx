@@ -1,7 +1,7 @@
 'use client'
 
 import { AxiosError } from 'axios'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { addLike, removeLike } from '../../services/tracks/tracksApi'
 import {
 	addLikedTracks,
@@ -23,29 +23,34 @@ export const useLikeTrack = (track: Track | null): returnTypeHook => {
 	const { access, refresh } = useAppSelector(state => state.auth)
 	const dispatch = useAppDispatch()
 
-	const isLike = favoriteTracks.some(t => t._id === track?._id)
+	const isLike = useMemo(
+		() => favoriteTracks.some(t => t._id === track?._id),
+		[favoriteTracks, track],
+	)
+
 	const [isLoading, setIsLoading] = useState(false)
 	const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
 	const toggleLike = () => {
 		if (!access) {
-			return setErrorMsg('Нет авторизации')
+			setErrorMsg('Нет авторизации')
+			return
 		}
 		if (!track) return
 
-		const actionApi = isLike ? removeLike : addLike
-		const actionSlice = isLike ? removeLikedTracks : addLikedTracks
+		const apiCall = isLike ? removeLike : addLike
+		const reduxAction = isLike ? removeLikedTracks : addLikedTracks
 
 		setIsLoading(true)
 		setErrorMsg(null)
 
 		withReauth(
-			newToken => actionApi(newToken || access, track._id),
+			newToken => apiCall(newToken || access, track._id),
 			refresh,
 			dispatch,
 		)
 			.then(() => {
-				dispatch(actionSlice(track))
+				dispatch(reduxAction(track))
 			})
 			.catch(error => {
 				if (error instanceof AxiosError) {
@@ -58,6 +63,8 @@ export const useLikeTrack = (track: Track | null): returnTypeHook => {
 					} else {
 						setErrorMsg('Неизвестная ошибка')
 					}
+				} else {
+					setErrorMsg('Ошибка при лайке')
 				}
 			})
 			.finally(() => {
