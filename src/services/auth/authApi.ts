@@ -18,10 +18,15 @@ export type AuthResponse = {
 	_id: number
 }
 
-export type TokenResponse = {
+export type AccessTokenResponse = {
 	access: string
+}
+
+export type RefreshTokenResponse = {
 	refresh: string
 }
+
+export type TokenResponse = AccessTokenResponse & RefreshTokenResponse
 
 export const authUser = (data: AuthUserProps): Promise<AuthResponse> => {
 	return axios
@@ -46,5 +51,19 @@ export const getTokens = (data: AuthUserProps): Promise<TokenResponse> => {
 		.post(BASE_API_URL + '/user/token/', data, {
 			headers: { 'Content-Type': 'application/json' },
 		})
+		.then(res => res.data)
+}
+
+export const refreshToken = (refresh: string): Promise<TokenResponse> => {
+	return axios
+		.post(
+			BASE_API_URL + '/user/token/refresh/',
+			{
+				refresh,
+			},
+			{
+				headers: { 'Content-Type': 'application/json' },
+			},
+		)
 		.then(res => res.data)
 }

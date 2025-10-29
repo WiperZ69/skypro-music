@@ -162,6 +162,16 @@
 	margin-right: 17px;
 	fill: transparent;
 	stroke: #696969;
+	transition: all 0.2s ease;
+}
+
+.track__timeSvg.liked {
+	fill: #b672ff;
+	stroke: #696969;
+}
+
+.track__timeSvg.dislike {
+	cursor: not-allowed;
 }
 
 .track__timeText {

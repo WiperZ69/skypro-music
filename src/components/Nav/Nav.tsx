@@ -2,14 +2,30 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { logout } from '../../store/features/authSlice'
+import { useAppDispatch, useAppSelector } from '../../store/store'
 import styles from './Nav.module.scss'
 
 export const Nav = () => {
 	const [isOpen, setIsOpen] = useState(false)
+	const router = useRouter()
+	const dispatch = useAppDispatch()
+	const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
 
-	const toggleMenu = () => {
-		setIsOpen(prev => !prev)
+	const toggleMenu = () => setIsOpen(prev => !prev)
+
+	const handleAuthClick = () => {
+		if (isAuthenticated) {
+			dispatch(logout())
+			localStorage.removeItem('access')
+			localStorage.removeItem('refresh')
+			localStorage.removeItem('user')
+		} else {
+			router.push('/auth/signin')
+		}
+		setIsOpen(false)
 	}
 
 	return (
@@ -21,7 +37,7 @@ export const Nav = () => {
 						height={170}
 						className={styles.logo__image}
 						src='/Image/logo.png'
-						alt={'logo'}
+						alt='logo'
 					/>
 				</Link>
 			</div>
@@ -61,18 +77,26 @@ export const Nav = () => {
 				<ul className={styles.menu__list}>
 					<li className={styles.menu__item}>
 						<Link href='/music/main' className={styles.menu__link}>
-							Главное
+							Главная
 						</Link>
 					</li>
+					{isAuthenticated ? (
+						<li className={styles.menu__item}>
+							<Link href='/music/favorite' className={styles.menu__link}>
+								Мой плейлист
+							</Link>
+						</li>
+					) : (
+						<></>
+					)}
 					<li className={styles.menu__item}>
-						<Link href='/music/me' className={styles.menu__link}>
-							Мой плейлист
-						</Link>
-					</li>
-					<li className={styles.menu__item}>
-						<Link href='/auth/signin' className={styles.menu__link}>
-							Войти
-						</Link>
+						<button
+							onClick={handleAuthClick}
+							className={styles.menu__link}
+							style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+						>
+							{isAuthenticated ? 'Выйти' : 'Войти'}
+						</button>
 					</li>
 				</ul>
 			</div>

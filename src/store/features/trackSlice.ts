@@ -1,9 +1,10 @@
-import { Track } from '@/types/track'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Track } from '../../types/track'
 
 type initialStateType = {
 	tracks: Track[]
 	allTracks: Track[]
+	favoriteTracks: Track[]
 	shuffledTracks: Track[]
 	currentTrack: null | Track
 	currentIndex: number
@@ -11,11 +12,14 @@ type initialStateType = {
 	isRepeat: boolean
 	isShuffle: boolean
 	volume: number
+	fetchError: null | string
+	fetchIsLoading: boolean
 }
 
 const initialState: initialStateType = {
 	tracks: [],
 	allTracks: [],
+	favoriteTracks: [],
 	shuffledTracks: [],
 	currentTrack: null,
 	currentIndex: -1,
@@ -23,6 +27,8 @@ const initialState: initialStateType = {
 	isRepeat: false,
 	isShuffle: false,
 	volume: 0.5,
+	fetchError: null,
+	fetchIsLoading: true,
 }
 
 const trackSlice = createSlice({
@@ -35,6 +41,17 @@ const trackSlice = createSlice({
 		},
 		setAllTracks: (state, action: PayloadAction<Track[]>) => {
 			state.allTracks = action.payload
+		},
+		setFavoriteTracks: (state, action: PayloadAction<Track[]>) => {
+			state.favoriteTracks = action.payload
+		},
+		addLikedTracks: (state, action) => {
+			state.favoriteTracks = [...state.favoriteTracks, action.payload]
+		},
+		removeLikedTracks: (state, action: PayloadAction<Track>) => {
+			state.favoriteTracks = state.favoriteTracks.filter(
+				t => t._id !== action.payload._id,
+			)
 		},
 		setCurrentTrack: (state, action: PayloadAction<Track>) => {
 			state.currentTrack = action.payload
@@ -98,12 +115,21 @@ const trackSlice = createSlice({
 		setVolume: (state, action: PayloadAction<number>) => {
 			state.volume = action.payload
 		},
+		setFetchError: (state, action: PayloadAction<string>) => {
+			state.fetchError = action.payload
+		},
+		setFetchIsLoading: (state, action: PayloadAction<boolean>) => {
+			state.fetchIsLoading = action.payload
+		},
 	},
 })
 
 export const {
 	setTracks,
 	setAllTracks,
+	setFavoriteTracks,
+	addLikedTracks,
+	removeLikedTracks,
 	setCurrentTrack,
 	setCurrentTrackByIndex,
 	setIsPlay,
@@ -112,5 +138,7 @@ export const {
 	toggleShuffle,
 	playNext,
 	playPrev,
+	setFetchError,
+	setFetchIsLoading,
 } = trackSlice.actions
 export const trackSliceReducer = trackSlice.reducer

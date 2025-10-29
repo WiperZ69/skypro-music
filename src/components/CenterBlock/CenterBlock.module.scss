@@ -276,13 +276,6 @@
 	}
 }
 
-.loading {
-	color: #4b4949;
-	text-align: center;
-	padding: 20px 0;
-	font-style: italic;
-}
-
 .error {
 	color: #fd5151;
 	text-align: center;
@@ -317,5 +310,30 @@
 	&:hover {
 		border-color: #b672ff;
 		color: #b672ff;
+	}
+}
+
+.loadingList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-top: 10px;
+}
+
+.centerblock__loadingTitle {
+	width: 500px;
+	height: 72px;
+	background: linear-gradient(90deg, #2f2f2f 25%, #3c3c3c 50%, #2f2f2f 75%);
+	background-size: 200% 100%;
+	border-radius: 8px;
+	animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
 	}
 }
