@@ -19,7 +19,7 @@ export default function NotFound() {
 				<p className={styles.description}>
 					Возможно, она была удалена <br /> или перенесена на другой адрес
 				</p>
-				<Link href='/' className={styles.link}>
+				<Link href='/music/main' className={styles.link}>
 					Вернуться на главную
 				</Link>
 			</div>

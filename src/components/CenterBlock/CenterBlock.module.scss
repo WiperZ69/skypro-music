@@ -267,4 +267,55 @@
 	box-sizing: border-box;
 	max-height: 170px;
 	height: 100%;
+	& div {
+		cursor: pointer;
+		transition: all 0.2s ease;
+		&:hover {
+			color: #b672ff;
+		}
+	}
+}
+
+.loading {
+	color: #4b4949;
+	text-align: center;
+	padding: 20px 0;
+	font-style: italic;
+}
+
+.error {
+	color: #fd5151;
+	text-align: center;
+	padding: 20px 0;
+	font-weight: 600;
+}
+
+.noResults {
+	color: #4b4949;
+	text-align: center;
+	padding: 20px 0;
+}
+
+.selected {
+	color: #b672ff;
+	text-decoration: underline;
+	cursor: pointer;
+	transition: color 0.3s;
+	&:hover {
+		color: #ffffff;
+	}
+}
+
+.filter__reset {
+	border: 1px solid #696969;
+	border-radius: 60px;
+	padding: 6px 20px;
+	color: #696969;
+	cursor: pointer;
+	transition: all 0.3s ease;
+
+	&:hover {
+		border-color: #b672ff;
+		color: #b672ff;
+	}
 }

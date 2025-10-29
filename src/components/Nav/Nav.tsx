@@ -15,13 +15,15 @@ export const Nav = () => {
 	return (
 		<nav className={styles.nav}>
 			<div className={styles.nav__logo}>
-				<Image
-					width={250}
-					height={170}
-					className={styles.logo__image}
-					src='/Image/logo.png'
-					alt={'logo'}
-				/>
+				<Link href='/music/main'>
+					<Image
+						width={250}
+						height={170}
+						className={styles.logo__image}
+						src='/Image/logo.png'
+						alt={'logo'}
+					/>
+				</Link>
 			</div>
 
 			<div
@@ -58,17 +60,17 @@ export const Nav = () => {
 			<div className={`${styles.nav__menu} ${isOpen ? styles.active : ''}`}>
 				<ul className={styles.menu__list}>
 					<li className={styles.menu__item}>
-						<Link href='#' className={styles.menu__link}>
+						<Link href='/music/main' className={styles.menu__link}>
 							Главное
 						</Link>
 					</li>
 					<li className={styles.menu__item}>
-						<Link href='#' className={styles.menu__link}>
+						<Link href='/music/me' className={styles.menu__link}>
 							Мой плейлист
 						</Link>
 					</li>
 					<li className={styles.menu__item}>
-						<Link href='../signin.html' className={styles.menu__link}>
+						<Link href='/auth/signin' className={styles.menu__link}>
 							Войти
 						</Link>
 					</li>
