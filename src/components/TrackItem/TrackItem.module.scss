@@ -73,6 +73,7 @@
 }
 
 .track__titleLink {
+	cursor: pointer;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -81,6 +82,7 @@
 }
 
 .track__titleSpan {
+	cursor: pointer;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -89,6 +91,7 @@
 }
 
 .track__author {
+	cursor: pointer;
 	width: 321px;
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -112,6 +115,7 @@
 }
 
 .track__albumLink {
+	cursor: pointer;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -120,6 +124,7 @@
 }
 
 .track__timeSvg {
+	cursor: pointer;
 	width: 14px;
 	height: 12px;
 	margin-right: 17px;
