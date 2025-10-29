@@ -114,6 +114,7 @@
 	}
 	&__btnRepeat {
 		margin-right: 24px;
+		cursor: pointer;
 	}
 	&__btnRepeatSvg {
 		width: 18px;
@@ -144,10 +145,50 @@
 		-ms-flex-direction: row;
 		flex-direction: row;
 	}
+	&__btnPrev,
+	&__btnNext,
+	&__btnPlay {
+		cursor: pointer;
+
+		svg {
+			fill: #d9d9d9;
+			transition:
+				fill 0.2s,
+				stroke 0.2s;
+		}
+
+		&:hover svg {
+			fill: #696969;
+		}
+
+		&:active svg {
+			fill: #ffffff;
+		}
+	}
+	&__btnPauseSvg {
+		&:hover {
+			fill: #696969;
+		}
+
+		&:active {
+			fill: #ffffff;
+		}
+	}
+}
+
+.repeat,
+.shuffleActive {
+	stroke: #ffffff;
 }
 
 .audio {
 	display: none;
+}
+
+.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+	cursor: not-allowed;
 }
 
 .trackPlay {
