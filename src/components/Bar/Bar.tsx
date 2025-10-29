@@ -61,7 +61,6 @@ export const Bar = () => {
 	const onToggleShuffle = () => {
 		dispatch(toggleShuffle())
 	}
-
 	const toggleMute = () => {
 		if (isMuted) {
 			dispatch(setVolume(prevVolume))
