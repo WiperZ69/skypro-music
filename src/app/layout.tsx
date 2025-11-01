@@ -1,6 +1,6 @@
-import ReduxProvider from '@/store/ReduxProvider'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
+import ReduxProvider from '../store/ReduxProvider'
 import './globals.css'
 
 const montserrat = Montserrat({

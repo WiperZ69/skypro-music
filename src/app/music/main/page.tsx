@@ -1,40 +1,17 @@
 'use client'
-
-import { getTracks } from '@/services/tracks/tracksApi'
-import { Track } from '@/types/track'
-import { AxiosError } from 'axios'
-import { useEffect, useState } from 'react'
-import { MusicTemplate } from '../MusicTemplate'
+import { CenterBlock } from '../../../components/CenterBlock/CenterBlock'
+import { useAppSelector } from '../../../store/store'
 
 export default function Home() {
-	const [tracks, setTracks] = useState<Track[]>([])
-	const [error, setError] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
-	const [categoryName, setCategoryName] = useState<string>('Треки')
-
-	useEffect(() => {
-		setIsLoading(true)
-		getTracks()
-			.then(res => {
-				setTracks(res)
-				setError('')
-			})
-			.catch(error => {
-				if (error instanceof AxiosError) {
-					if (error.response) setError(error.response.data)
-					else if (error.request) setError('Что-то с интернетом')
-					else setError('Неизвестная ошибка')
-				}
-			})
-			.finally(() => setIsLoading(false))
-	}, [])
-
+	const { FetchError, FetchIsLoading, allTracks } = useAppSelector(
+		state => state.tracks,
+	)
 	return (
-		<MusicTemplate
-			categoryName={categoryName}
-			tracks={tracks}
-			error={error}
-			isLoading={isLoading}
+		<CenterBlock
+			title={'Треки'}
+			tracks={allTracks}
+			error={FetchError}
+			isLoading={FetchIsLoading}
 		/>
 	)
 }
