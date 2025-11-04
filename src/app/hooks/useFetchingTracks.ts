@@ -2,7 +2,6 @@
 
 import { AxiosError } from 'axios'
 import { useEffect } from 'react'
-import { withReauth } from '../../app/hooks/withReAuth'
 import { getTracks } from '../../services/tracks/tracksApi'
 import {
 	setAllTracks,
@@ -10,17 +9,15 @@ import {
 	setFetchIsLoading,
 } from '../../store/features/trackSlice'
 import { useAppDispatch, useAppSelector } from '../../store/store'
+import { withReauth } from './withReAuth'
 
-export default function FetchingTracks() {
+export const useFetchingTracks = () => {
 	const dispatch = useAppDispatch()
 	const { allTracks } = useAppSelector(state => state.tracks)
 	const { access, refresh } = useAppSelector(state => state.auth)
 
 	useEffect(() => {
-		if (allTracks.length) {
-			dispatch(setAllTracks(allTracks))
-			return
-		}
+		if (allTracks.length) return
 
 		const fetchData = async () => {
 			dispatch(setFetchIsLoading(true))
@@ -50,7 +47,5 @@ export default function FetchingTracks() {
 		}
 
 		fetchData()
-	}, [dispatch, allTracks, refresh])
-
-	return null
+	}, [dispatch, allTracks, refresh, access])
 }

@@ -1,12 +1,17 @@
 export interface Track {
-	_id: number
-	name: string
-	author: string
-	release_date: string
-	genre: string[]
-	duration_in_seconds: number
 	album: string
+	author: string
+	duration_in_seconds: number
+	genre: string[]
 	logo: string | null
+	name: string
+	release_date: string
+	staredUser: []
 	track_file: string
-	stared_user: any[]
+	_id: number
+}
+
+export interface SelectionResponse {
+	name: string
+	items: number[]
 }

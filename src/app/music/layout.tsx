@@ -3,7 +3,6 @@
 import { ToastContainer } from 'react-toastify'
 import { Bar } from '../../components/Bar/Bar'
 import FetchingFavorites from '../../components/FetchingTracks/FetchingFavorites'
-import FetchingTracks from '../../components/FetchingTracks/FetchingTracks'
 import { Nav } from '../../components/Nav/Nav'
 import { Sidebar } from '../../components/Sidebar/Sidebar'
 import { useInitAuth } from '../hooks/useInitAuth'
@@ -15,7 +14,6 @@ export default function MusicPage({ children }: { children: React.ReactNode }) {
 		<div className={styles.wrapper}>
 			<div className={styles.container}>
 				<main className={styles.main}>
-					<FetchingTracks />
 					<FetchingFavorites />
 					<Nav />
 					{children}

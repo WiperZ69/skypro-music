@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { CenterBlock } from '../../../../components/CenterBlock/CenterBlock'
-import { getTracks } from '../../../../services/tracks/tracksApi'
+import { getSelection, getTracks } from '../../../../services/tracks/tracksApi'
 import { setAllTracks, setTracks } from '../../../../store/features/trackSlice'
 import { useAppDispatch, useAppSelector } from '../../../../store/store'
 import { Track } from '../../../../types/track'
@@ -28,11 +28,11 @@ export default function CategoryPage() {
 			setError('')
 
 			try {
-				const selectionData = await getTracks(id, access)
+				const selectionData = await getSelection(id, access)
 				setCategoryName(selectionData.name)
-				const trackIds: string[] = selectionData.items
+				const trackIds = selectionData.items
 
-				let tracksData: Track[] = allTracks
+				let tracksData = allTracks
 				if (!allTracks.length) {
 					tracksData = await getTracks()
 					dispatch(setAllTracks(tracksData))
