@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { setTracks } from '../../store/features/trackSlice'
 import { useAppDispatch } from '../../store/store'
 import { Track } from '../../types/track'
+import { LoadingTrackItem } from '../LoadingTrackItem/LoadingTrackItem'
 import { TrackItem } from '../TrackItem/TrackItem'
 import styles from './CenterBlock.module.scss'
 import { FilterPanel } from './FilterPanel/FilterPanel'
@@ -104,7 +105,9 @@ export const CenterBlock = ({
 	return (
 		<div className={styles.centerblock}>
 			<SearchBar search={search} setSearch={setSearch} />
-			<h2 className={styles.centerblock__h2}>{title || 'Загрузка...'}</h2>
+			<h2 className={styles.centerblock__h2}>
+				{title || <div className={styles.centerblock__loadingTitle}></div>}
+			</h2>
 
 			<FilterPanel
 				activeFilter={activeFilter}
@@ -137,7 +140,11 @@ export const CenterBlock = ({
 
 				<div className={styles.content__playlist}>
 					{isLoading && (
-						<div className={styles.loading}>Загрузка треков...</div>
+						<div className={styles.loadingList}>
+							{Array.from({ length: 10 }).map((_, i) => (
+								<LoadingTrackItem key={i} />
+							))}
+						</div>
 					)}
 					{error && <div className={styles.error}>{error}</div>}
 

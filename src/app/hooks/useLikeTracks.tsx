@@ -2,6 +2,7 @@
 
 import { AxiosError } from 'axios'
 import { useMemo, useState } from 'react'
+import { toast } from 'react-toastify'
 import { addLike, removeLike } from '../../services/tracks/tracksApi'
 import {
 	addLikedTracks,
@@ -33,6 +34,7 @@ export const useLikeTrack = (track: Track | null): returnTypeHook => {
 
 	const toggleLike = () => {
 		if (!access) {
+			toast.info('Нет авторизации')
 			setErrorMsg('Нет авторизации')
 			return
 		}
@@ -56,14 +58,18 @@ export const useLikeTrack = (track: Track | null): returnTypeHook => {
 				if (error instanceof AxiosError) {
 					if (error.response) {
 						setErrorMsg(
-							error.response.data?.message || 'Ошибка при отправке лайка',
+							error.response.data?.message ||
+								toast.error('Ошибка при добавлении трека'),
 						)
 					} else if (error.request) {
+						toast.error('Проблема с соединением')
 						setErrorMsg('Проблема с соединением')
 					} else {
+						toast.error('Неизвестная ошибка')
 						setErrorMsg('Неизвестная ошибка')
 					}
 				} else {
+					toast.error('Ошибка при лайке')
 					setErrorMsg('Ошибка при лайке')
 				}
 			})
