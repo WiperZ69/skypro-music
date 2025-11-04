@@ -2,8 +2,16 @@ import axios from 'axios'
 import { SelectionResponse, Track } from '../../types/track'
 import { BASE_API_URL } from '../constants'
 
-export const getTracks = async (): Promise<Track[]> => {
-	const res = await axios.get(`${BASE_API_URL}/catalog/track/all/`)
+export const getTracks = async (access?: string): Promise<Track[]> => {
+	const config = access
+		? {
+				headers: {
+					Authorization: `Bearer ${access}`,
+				},
+			}
+		: {}
+
+	const res = await axios.get(`${BASE_API_URL}/catalog/track/all/`, config)
 	return res.data.data
 }
 
