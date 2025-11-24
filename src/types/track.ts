@@ -6,7 +6,7 @@ export interface Track {
 	logo: string | null
 	name: string
 	release_date: string
-	staredUser: []
+	staredUser: number[]
 	track_file: string
 	_id: number
 }
