@@ -12,7 +12,6 @@ export const getTracks = async (access?: string): Promise<Track[]> => {
 		: {}
 
 	const res = await axios.get(`${BASE_API_URL}/catalog/track/all/`, config)
-	console.log(res.data.data)
 	return res.data.data
 }
 
