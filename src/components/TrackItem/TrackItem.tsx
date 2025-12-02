@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'react-toastify'
 import { useLikeTrack } from '../../app/hooks/useLikeTracks'
 import { setCurrentTrack, setIsPlay } from '../../store/features/trackSlice'
 import { useAppDispatch, useAppSelector } from '../../store/store'
@@ -28,7 +29,9 @@ export const TrackItem = ({ track }: Props) => {
 	}
 
 	const doAuth = () => {
-		alert('Чтобы лайкнуть трек необходимо зарегистрироваться')
+		toast.info('Чтобы лайкнуть трек, необходимо зарегистрироваться', {
+			className: 'my-toast my-toast-info',
+		})
 	}
 
 	return (

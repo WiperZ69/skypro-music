@@ -3,6 +3,7 @@
 import classNames from 'classnames'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 import { useLikeTrack } from '../../app/hooks/useLikeTracks'
 import {
 	playNext,
@@ -60,7 +61,6 @@ export const Bar = () => {
 	const onToggleShuffle = () => {
 		dispatch(toggleShuffle())
 	}
-
 	const toggleMute = () => {
 		if (isMuted) {
 			dispatch(setVolume(prevVolume))
@@ -133,7 +133,7 @@ export const Bar = () => {
 		if (isAuthenticated) {
 			toggleLike()
 		} else {
-			alert('Чтобы лайкнуть трек необходимо зарегистрироваться')
+			toast.info('Чтобы лайкнуть трек необходимо зарегистрироваться')
 		}
 	}
 

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { toast } from 'react-toastify'
 import { getTokens, registerUser } from '../../../services/auth/authApi'
 import { setCredentials } from '../../../store/features/authSlice'
 import { useAppDispatch } from '../../../store/store'
@@ -27,11 +28,17 @@ export default function SignUp() {
 		setErrorMessage('')
 
 		if (!email || !username || !password || !repeatPassword) {
-			return setErrorMessage('Заполните все поля')
+			return (
+				setErrorMessage('Заполните все поля'),
+				toast.warn('Заполните все поля')
+			)
 		}
 
 		if (password !== repeatPassword) {
-			return setErrorMessage('Пароли не совпадают')
+			return (
+				setErrorMessage('Пароли не совпадают'),
+				toast.warn('Пароли не совпадают')
+			)
 		}
 
 		setIsLoading(true)
@@ -55,14 +62,19 @@ export default function SignUp() {
 		} catch (error) {
 			if (error instanceof AxiosError) {
 				if (error.response) {
-					setErrorMessage(error.response.data.message || 'Ошибка регистрации')
+					setErrorMessage(
+						error.response.data.message || toast.error('Ошибка регистрации'),
+					)
 				} else if (error.request) {
 					setErrorMessage('Проблема с интернетом')
+					toast.error('Проблема с интернетом')
 				} else {
 					setErrorMessage('Неизвестная ошибка')
+					toast.error('Неизвестная ошибка')
 				}
 			} else {
 				setErrorMessage('Ошибка сервера')
+				toast.error('Ошибка сервера')
 			}
 		} finally {
 			setIsLoading(false)

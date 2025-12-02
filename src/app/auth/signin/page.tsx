@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { toast } from 'react-toastify'
 import { authUser, getTokens } from '../../../services/auth/authApi'
 import { setCredentials } from '../../../store/features/authSlice'
 import { useAppDispatch } from '../../../store/store'
@@ -25,7 +26,10 @@ export default function Signin() {
 		setErrorMessage('')
 
 		if (!email.trim() || !password.trim()) {
-			return setErrorMessage('Заполните все поля')
+			return (
+				setErrorMessage('Заполните все поля'),
+				toast.warn('Заполните все поля')
+			)
 		}
 
 		setIsLoading(true)
@@ -49,14 +53,19 @@ export default function Signin() {
 		} catch (error) {
 			if (error instanceof AxiosError) {
 				if (error.response) {
-					setErrorMessage(error.response.data.message || 'Ошибка авторизации')
+					setErrorMessage(
+						error.response.data.message || toast.error('Ошибка авторизации'),
+					)
 				} else if (error.request) {
 					setErrorMessage('Проблема с интернетом')
+					toast.error('Проблема с интернетом')
 				} else {
 					setErrorMessage('Неизвестная ошибка')
+					toast.error('Неизвестная ошибка')
 				}
 			} else {
 				setErrorMessage('Ошибка сервера')
+				toast.error('Ошибка сервера')
 			}
 		} finally {
 			setIsLoading(false)

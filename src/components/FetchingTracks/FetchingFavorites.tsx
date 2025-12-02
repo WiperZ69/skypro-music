@@ -1,20 +1,26 @@
 'use client'
 
 import { useEffect } from 'react'
+import { withReauth } from '../../app/hooks/withReAuth'
 import { getFavoriteTracks } from '../../services/tracks/tracksApi'
 import { setFavoriteTracks } from '../../store/features/trackSlice'
 import { useAppDispatch, useAppSelector } from '../../store/store'
 
-export default function FetchFavorites() {
+export default function FetchingFavorites() {
 	const dispatch = useAppDispatch()
-	const { access } = useAppSelector(state => state.auth)
+	const { access, refresh } = useAppSelector(state => state.auth)
 
 	useEffect(() => {
-		if (!access) return
+		if (!refresh) return
 
 		const fetchFavorites = async () => {
 			try {
-				const data = await getFavoriteTracks(access)
+				const data = await withReauth(
+					async (access: string) => await getFavoriteTracks(access),
+					refresh,
+					dispatch,
+					access,
+				)
 				dispatch(setFavoriteTracks(data))
 			} catch (err) {
 				console.error('Ошибка загрузки избранных треков:', err)
@@ -22,7 +28,7 @@ export default function FetchFavorites() {
 		}
 
 		fetchFavorites()
-	}, [access, dispatch])
+	}, [access, refresh, dispatch])
 
 	return null
 }

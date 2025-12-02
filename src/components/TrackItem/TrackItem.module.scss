@@ -5,6 +5,12 @@
 	opacity: 0;
 	transform: translateY(10px);
 	animation: fadeIn 0.3s ease forwards;
+	transition: all 0.2s ease;
+	border-left: 2px solid transparent;
+}
+
+.playlist__item:hover {
+	border-left: 2px solid #b672ff;
 }
 
 @keyframes fadeIn {
